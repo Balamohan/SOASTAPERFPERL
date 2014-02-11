@@ -194,7 +194,7 @@ my $browser = LWP::UserAgent->new;
 $browser->cookie_jar({});  #Enable Cookies
 
 #uncomment the below to record calls in CloudTest
- $browser->proxy(['http', 'ftp'], 'http://localhost:8080/');
+# $browser->proxy(['http', 'ftp'], 'http://localhost:8080/');
 
 my $url="$soastaUrl".'/';
  my @ns_headers = (
