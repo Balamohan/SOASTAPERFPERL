@@ -219,7 +219,8 @@ my $url="$soastaUrl".'/';
  print ("Build numer is $buildNumber\n");
 
 print ("Soasta URL is $soastaUrl\n");
-my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
+#my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
+my $url = "$soastaUrl".'/dwr/call/plaincall/__b3BrjSC1JbcHLWtaHzvyA9bywgk.dwr';
 print ("Url is $url\n");
  my @ns_headers = (
    'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)',
