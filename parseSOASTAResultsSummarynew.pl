@@ -220,7 +220,7 @@ my $url="$soastaUrl".'/';
 
 print ("Soasta URL is $soastaUrl\n");
 my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
-#print ("Url is $url\n");
+print ("Url is $url\n");
  my @ns_headers = (
    'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)',
    'Accept' => 'image/gif, image/x-xbitmap, image/jpeg, 
@@ -249,7 +249,7 @@ my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
  
  $myData=$response1->content;
  
-#print "Response 1 is $myData \n";
+print "Response 1 is $myData \n";
 $myData=~/.handleCallback\(\"\d\",\"\d\",\"(.*?)\"\)/;
 
 $SystemGeneratedId=$1;
@@ -259,7 +259,7 @@ $SystemGeneratedId=$1;
 #Send Request #2
 #goto=&userName=mostenbergci&password=soasta
 my $url2 = "$soastaUrl".'/Login';
-#print ("Url2 is $url2 and $password is $password\n");
+print ("Url2 is $url2 and $password is $password\n");
    $response2 = $browser->post( $url2,
    [
 		'goto'=>'',
@@ -273,12 +273,12 @@ my $url2 = "$soastaUrl".'/Login';
  );
 
 $myData2=$response2->content ;
-#print ("Response 2 is $myData2\n");
+print ("Response 2 is $myData2\n");
 
-#print ("Result id is $resultId\n");
+print ("Result id is $resultId\n");
 #Send Request #3
 my $url3 = "$soastaUrl".'/dwr/call/plaincall/CommonPollerProxy.doPoll.dwr';
-#print ("Url 3 is $url3\n");
+print ("Url 3 is $url3\n");
 
    $response3 = $browser->post( $url3,
    
@@ -329,11 +329,11 @@ sleep 5;
 #	'scriptSessionId'=> "$systemGeneratedId\/VOovRdk-\$sUkFFRd9"	
 
 $myData3=$response3->content ;
-#print ("Response 3 is $myData3\n");
+print ("Response 3 is $myData3\n");
 
 #Send request #4
 my $url4 = "$soastaUrl".'/dwr/call/plaincall/CommonPollerProxy.doPoll.dwr';
-#print ("Url 4 is $url4\n");
+print ("Url 4 is $url4\n");
    $response4 = $browser->post( $url4,
    
 		'Content'=>'callCount=1
@@ -374,13 +374,13 @@ open FILE, "2_SOASTA_RESULTS_DETAILS.xml" or die "Couldn't open file 2_SOASTA_RE
 $results=<FILE>;
 $results=~ /resultSet:"(.*)",stillRunning:false/;
 $resultSet=$1;
-#print $resultSet;
+print $resultSet;
 
 @transactionResults = $resultSet =~ /\[(.*?)\]/gms;
 print ("\n\n");
 $numResults=@transactionResults;
-#print ("Numresults is $numResults\n");
-#print $transactionResults[1];
+print ("Numresults is $numResults\n");
+print $transactionResults[1];
 print ("\n\n");
 
 printf ("%50s %8s %8s %8s %8s %12s %12s %8s %8s\n", "Name","avg","90th","min","max","bytesSent","bytesRcvd","errors","Count");
@@ -398,7 +398,7 @@ open COUNT,">5h_CloudTestPlotFile_Count.csv" or die ("Couldn't open 3a_CloudTest
 
 foreach (@transactionResults)
 {
-	#print ("First item is $items[0]\n");
+	print ("First item is $items[0]\n");
 	@items = split (',',$_); 
 	$name = $items[0]; $name=~s/\\+//g; $name =~ s/"//g;
 	$collections=$items[6];
@@ -412,7 +412,7 @@ foreach (@transactionResults)
 	$errors=$items[14];
 
 	$csv+= "";
-	#print "Name is $name and avg is $avg and 90th is $ninetieth and errors are $errors\n\n";
+	print "Name is $name and avg is $avg and 90th is $ninetieth and errors are $errors\n\n";
 	$actual{$name}=$avg;
 	$ninetieth{$name}=$ninetieth;
 	$errors{$name}=$errors;
@@ -421,7 +421,7 @@ foreach (@transactionResults)
 	$max{$name}=$max;
 	$min{$name}=$min;
 	printf ("%50s    %-3.3f    %-3.3f     %-3.3f    %-3.3f %12i %12i %6i %6i\n", $name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors,$collections);
-	#print ("Should plot for $name is : $shouldPlot{$name}\n");
+	print ("Should plot for $name is : $shouldPlot{$name}\n");
 	if ($shouldPlot{$name} eq "True")
 	{ 		
 		$plotFileData.="$name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors\n";
@@ -446,7 +446,7 @@ foreach (@transactionResults)
 		print ERROR "$errorHdr\n$errorData\n";
 
 close AVG;close N90th;close MIN;close MAX;close BYTESSENT;close BYTESRCVD; close COUNT;close ERROR;
-#print ("Plot file is :\n$plotFileData\n");
+print ("Plot file is :\n$plotFileData\n");
 open PLOTFILE, ">Plotfile.csv" or die ("Couldn't open PlotFile for writing\n");
 print PLOTFILE $plotFileData;
 close PLOTFILE;
@@ -464,8 +464,8 @@ $junitxml.="\t<testcase name=\"Link to detailed Results: $soastaUrl\/\/Central\?
  	if    ($actual{$SLA}==NULL) 	 {$status="FAIL"; $message="Transaction \"$SLA\" does not appear in SOASTA composition";}
  	elsif ($actual{$SLA} > $SLA{$SLA}) {$status="FAIL"; $message="Transaction $SLA exceeded threshold of $SLA{$SLA}. (it was $actual{$SLA})";}
  	else  {$status="PASS"; $message="Transaction $SLA was faster than threshold of $SLA{$SLA}. (it was $actual{$SLA})";}
-  	#print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
- 	#print ("Status: $status\nMessage: $message\n\n");
+  	print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
+ 	print ("Status: $status\nMessage: $message\n\n");
  	
  	if ($status ne "FAIL") 
  		{
@@ -486,8 +486,8 @@ $junitxml.="\t<testcase name=\"Link to detailed Results: $soastaUrl\/\/Central\?
  	if    ($ninetieth{$transaction}==NULL) 	 {$status="FAIL"; $message="Transaction \"$transaction\" does not appear in SOASTA composition";}
  	elsif ($ninetieth{$transaction} > $SLAninetieth{$transaction}) {$status="FAIL"; $message="Transaction $transaction exceeded 90th percentile time of $SLAninetieth{$transaction}. (it was $ninetieth{$transaction})";}
  	else  {$status="PASS"; $message="Transaction $transaction was faster than threshold of $SLAninetieth{$transaction}. (it was $ninetieth{$transaction})";}
-  	#print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
- 	#print ("Status: $status\nMessage: $message\n\n");
+  	print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
+ 	print ("Status: $status\nMessage: $message\n\n");
  	
  	if ($status ne "FAIL") 
  		{
@@ -505,8 +505,8 @@ $junitxml.="\t<testcase name=\"Link to detailed Results: $soastaUrl\/\/Central\?
  	if    ($SLAerrors{$transaction}==NULL) 	 {$status="FAIL"; $message="Transaction \"$transaction\" does not appear in SOASTA composition";}
  	elsif ($errors{$transaction} > $SLAerrors{$transaction}) {$status="FAIL"; $message="Transaction $transaction exceeded allowable error count of $SLAerrors{$transaction}. (it was $errors{$transaction})";}
  	else  {$status="PASS"; $message="Transaction $transaction was less than maximum error count of $SLAerrors{$transaction}. (it was $errors{$transaction})";}
-  	#print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
- 	#print ("Status: $status\nMessage: $message\n\n");
+  	print ("Transaction: \"$SLA\"\t SLA: $SLA{$SLA} \t Actual: $actual{$SLA}\n");
+ 	print ("Status: $status\nMessage: $message\n\n");
  	
  	if ($status ne "FAIL") 
  		{
