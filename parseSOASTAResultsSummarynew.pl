@@ -344,7 +344,8 @@ c0-scriptName=CommonPollerProxy
 c0-methodName=doPoll
 c0-id=0
 c0-e1=array:[]
-c0-e2=string:6872.81
+#c0-e2=string:6872.81
+c0-e2=string:'.$buildNumber.'
 c0-e3=string:9a8c1355-c9eb-d0c1-1e9a-5308a06f9b76
 c0-param0=Object_Object:{methodRequests:reference:c0-e1, clientVersion:reference:c0-e2, pollerUUID:reference:c0-e3}
 batchId=48
@@ -365,7 +366,8 @@ $myData4=$response4->content ;
 print ("Response 4 is $myData4\n");
 open FILE, ">2_SOASTA_RESULTS_DETAILS.xml" or die "Couldn't open file 2_SOASTA_RESULTS_DETAILS.xml for writing";
 print ("Testing SOASTA $myData4\n");
-print FILE $myData4;
+#print FILE $myData4;
+print FILE $myData3;
 close FILE;
 sleep 2;
 
