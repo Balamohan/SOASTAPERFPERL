@@ -195,6 +195,7 @@ $browser->cookie_jar({});  #Enable Cookies
 
 #uncomment the below to record calls in CloudTest
 # $browser->proxy(['http', 'ftp'], 'http://localhost:8080/');
+ $browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
 
 my $url="$soastaUrl".'/';
  my @ns_headers = (
@@ -219,8 +220,8 @@ my $url="$soastaUrl".'/';
  print ("Build numer is $buildNumber\n");
 
 print ("Soasta URL is $soastaUrl\n");
-#my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
-my $url = "$soastaUrl".'/dwr/call/plaincall/__b3BrjSC1JbcHLWtaHzvyA9bywgk.dwr';
+my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
+#my $url = "$soastaUrl".'/dwr/call/plaincall/__b3BrjSC1JbcHLWtaHzvyA9bywgk.dwr';
 print ("Url is $url\n");
  my @ns_headers = (
    'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)',
@@ -254,7 +255,7 @@ print "Response 1 is $myData \n";
 $myData=~/.handleCallback\(\"\d\",\"\d\",\"(.*?)\"\)/;
 
 $SystemGeneratedId=$1;
-#print "SystemGeneratedId= $SystemGeneratedId \n";
+print "SystemGeneratedId= $SystemGeneratedId \n";
 #r.handleCallback("0","0","WEgC9ZM59FEvoGotA7PpjWbb8ek");
 #system (pwd);  #For debugging, find what directory we're in...
 #Send Request #2
