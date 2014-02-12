@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 
 # Written by Mike Ostenberg of SOASTA , Jan 2, 2013
+# Edited for Target.Com Project POC by Balamohan, Feb 12, 2014
 # Usage: This PERL script will allow you to specify the names of CloudTest transactions, as well as 
 # threshold values for when those transactions should be considered 'failed'.  It will then review a 
 # SOASTA CloudTest results file and find all of the named transactions and compute their response time and do the following:
