@@ -366,8 +366,8 @@ $myData4=$response4->content ;
 print ("Response 4 is $myData4\n");
 open FILE, ">2_SOASTA_RESULTS_DETAILS.xml" or die "Couldn't open file 2_SOASTA_RESULTS_DETAILS.xml for writing";
 print ("Testing SOASTA $myData4\n");
-#print FILE $myData4;
-print FILE $myData3;
+print FILE $myData4;
+#print FILE $myData3;
 close FILE;
 sleep 2;
 
