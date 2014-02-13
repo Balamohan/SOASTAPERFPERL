@@ -189,7 +189,7 @@ my $browser = LWP::UserAgent->new;
 $browser->cookie_jar({});  #Enable Cookies
 
 #uncomment the below to record calls in CloudTest
-#$browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
+$browser->proxy(['http', 'ftp'], 'http://t1.soasta.com/concerto');
 
 my $url="$soastaUrl".'/';
  my @ns_headers = (
