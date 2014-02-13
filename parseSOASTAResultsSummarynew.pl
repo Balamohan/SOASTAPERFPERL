@@ -10,6 +10,8 @@
 #	c) If a transaction response time is slower than the acceptable response time, it will 'fail' the transaction.
 #	d) The Pass/Fail status of all transactions will be passed back to CloudTest in jUnit compatible XML
 #	e) A file names 'performanceplot.csv' will be created in local directory to allow performance response time graphing in Jenkins.
+#   
+#
 
 local $/; #Changes end of line character so whole file will be slurped in.
 
@@ -156,7 +158,7 @@ else
 }
 
 #STEP 2: Run the loadtest composition
-$runCompString = "./scommand/bin/scommand cmd=play name=\"/$compName\" username=$username password=$password url=$soastaUrl wait=yes format=junitxml file=1-SOASTA_RESULTS_ID.xml";
+$runCompString = "/scommand/bin/scommand cmd=play name=\"/$compName\" username=$username password=$password url=$soastaUrl wait=yes format=junitxml file=1-SOASTA_RESULTS_ID.xml";
 
 print "\n*** Step 2: Playing the composition by passing the following arguments to SCOMMAND:\n\t$runCompString\n";
 system($runCompString);
@@ -184,13 +186,17 @@ print ("\tWrite details to file 2_SOASTA_RESULTS_DETAILS.xml\n");
 
 use LWP::UserAgent;
 use HTTP::Request;
+#$soastaUrl="http://ttlabca.soasta.com";
+#$username="mostenbergci";
+#$password="soasta";
+#$resultId="16109";
 
 my $browser = LWP::UserAgent->new;
 $browser->cookie_jar({});  #Enable Cookies
 
 #uncomment the below to record calls in CloudTest
-#$browser->proxy(['http', 'ftp'], 'http://t1.soasta.com/concerto');
-$browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
+# $browser->proxy(['http', 'ftp'], 'http://localhost:8080/');
+ $browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
 
 my $url="$soastaUrl".'/';
  my @ns_headers = (
@@ -216,7 +222,7 @@ my $url="$soastaUrl".'/';
 
 print ("Soasta URL is $soastaUrl\n");
 my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
-
+#my $url = "$soastaUrl".'/dwr/call/plaincall/__b3BrjSC1JbcHLWtaHzvyA9bywgk.dwr';
 print ("Url is $url\n");
  my @ns_headers = (
    'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)',
@@ -244,17 +250,19 @@ print ("Url is $url\n");
  );
  
  
-$myData=$response1->content;
+ $myData=$response1->content;
  
-#print "Response 1 is $myData \n";
+print "Response 1 is $myData \n";
 $myData=~/.handleCallback\(\"\d\",\"\d\",\"(.*?)\"\)/;
 
 $SystemGeneratedId=$1;
-#print "SystemGeneratedId= $SystemGeneratedId \n";
+print "SystemGeneratedId= $SystemGeneratedId \n";
+#r.handleCallback("0","0","WEgC9ZM59FEvoGotA7PpjWbb8ek");
+#system (pwd);  #For debugging, find what directory we're in...
 #Send Request #2
-
+#goto=&userName=mostenbergci&password=soasta
 my $url2 = "$soastaUrl".'/Login';
-#print ("Url2 is $url2 and $password is $password\n");
+print ("Url2 is $url2 and $password is $password\n");
    $response2 = $browser->post( $url2,
    [
 		'goto'=>'',
@@ -268,12 +276,12 @@ my $url2 = "$soastaUrl".'/Login';
  );
 
 $myData2=$response2->content ;
-#print ("Response 2 is $myData2\n");
+print ("Response 2 is $myData2\n");
 
-#print ("Result id is $resultId\n");
+print ("Result id is $resultId\n");
 #Send Request #3
 my $url3 = "$soastaUrl".'/dwr/call/plaincall/CommonPollerProxy.doPoll.dwr';
-#print ("Url 3 is $url3\n");
+print ("Url 3 is $url3\n");
 
    $response3 = $browser->post( $url3,
    
@@ -324,11 +332,11 @@ sleep 5;
 #	'scriptSessionId'=> "$systemGeneratedId\/VOovRdk-\$sUkFFRd9"	
 
 $myData3=$response3->content ;
-#print ("Response 3 is $myData3\n");
+print ("Response 3 is $myData3\n");
 
 #Send request #4
 my $url4 = "$soastaUrl".'/dwr/call/plaincall/CommonPollerProxy.doPoll.dwr';
-#print ("Url 4 is $url4\n");
+print ("Url 4 is $url4\n");
    $response4 = $browser->post( $url4,
    
 		'Content'=>'callCount=1
@@ -356,10 +364,11 @@ scriptSessionId='.$SystemGeneratedId.'/VOovRdk-$sUkFFRd9'
 #	'scriptSessionId'=> "$systemGeneratedId\/VOovRdk-\$sUkFFRd9"	
 
 $myData4=$response4->content ;
-#print ("Response 4 is $myData4\n");
+print ("Response 4 is $myData4\n");
 open FILE, ">2_SOASTA_RESULTS_DETAILS.xml" or die "Couldn't open file 2_SOASTA_RESULTS_DETAILS.xml for writing";
 print ("Testing SOASTA $myData4\n");
 print FILE $myData4;
+#print FILE $myData3;
 close FILE;
 sleep 2;
 
@@ -419,8 +428,8 @@ foreach (@transactionResults)
 	$min{$name}=$min;
 	printf ("%50s    %-3.3f    %-3.3f     %-3.3f    %-3.3f %12i %12i %6i %6i\n", $name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors,$collections);
 	print ("Should plot for $name is : $shouldPlot{$name}\n");
-	if ($shouldPlot{$name} eq "True")
-	{ 		
+	#if ($shouldPlot{$name} eq "True")
+	#{ 		
 		$plotFileData.="$name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors\n";
 		$avgHdr.="$name,";$avgData.="$avg,";
 		$n90thHdr.="$name,";$n90thData.="$ninetieth,";
@@ -430,7 +439,7 @@ foreach (@transactionResults)
 		$bytesRcvdHdr.="$name,";$bytesRcvdData.="$bytesReceived,";
 		$countHdr.="$name,";$countData.="$collections,";
 		$errorHdr.="$name,";$errorData.="$errors,";
-	}
+#	}
 }
 
 		print AVG "$avgHdr\n$avgData\n";
@@ -443,7 +452,7 @@ foreach (@transactionResults)
 		print ERROR "$errorHdr\n$errorData\n";
 
 close AVG;close N90th;close MIN;close MAX;close BYTESSENT;close BYTESRCVD; close COUNT;close ERROR;
-#print ("Plot file is :\n$plotFileData\n");
+print ("Plot file is :\n$plotFileData\n");
 open PLOTFILE, ">Plotfile.csv" or die ("Couldn't open PlotFile for writing\n");
 print PLOTFILE $plotFileData;
 close PLOTFILE;
