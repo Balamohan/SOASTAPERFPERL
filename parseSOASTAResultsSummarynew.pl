@@ -418,8 +418,8 @@ foreach (@transactionResults)
 	$min{$name}=$min;
 	printf ("%50s    %-3.3f    %-3.3f     %-3.3f    %-3.3f %12i %12i %6i %6i\n", $name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors,$collections);
 	print ("Should plot for $name is : $shouldPlot{$name}\n");
-	#if ($shouldPlot{$name} eq "True")
-	#{ 		
+	if ($shouldPlot{$name} eq "True")
+	{ 		
 		$plotFileData.="$name,$avg,$ninetieth,$min,$max,$bytesSent,$bytesReceived,$errors\n";
 		$avgHdr.="$name,";$avgData.="$avg,";
 		$n90thHdr.="$name,";$n90thData.="$ninetieth,";
@@ -429,7 +429,7 @@ foreach (@transactionResults)
 		$bytesRcvdHdr.="$name,";$bytesRcvdData.="$bytesReceived,";
 		$countHdr.="$name,";$countData.="$collections,";
 		$errorHdr.="$name,";$errorData.="$errors,";
-#	}
+	}
 }
 
 		print AVG "$avgHdr\n$avgData\n";
@@ -442,7 +442,7 @@ foreach (@transactionResults)
 		print ERROR "$errorHdr\n$errorData\n";
 
 close AVG;close N90th;close MIN;close MAX;close BYTESSENT;close BYTESRCVD; close COUNT;close ERROR;
-print ("Plot file is :\n$plotFileData\n");
+#print ("Plot file is :\n$plotFileData\n");
 open PLOTFILE, ">Plotfile.csv" or die ("Couldn't open PlotFile for writing\n");
 print PLOTFILE $plotFileData;
 close PLOTFILE;
