@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 
 # Written by Mike Ostenberg of SOASTA , Jan 2, 2013
+#Edited by Balamohan for Target.Com project, Feb 06,2014
 # Usage: This PERL script will allow you to specify the names of CloudTest transactions, as well as 
 # threshold values for when those transactions should be considered 'failed'.  It will then review a 
 # SOASTA CloudTest results file and find all of the named transactions and compute their response time and do the following:
@@ -324,7 +325,7 @@ scriptSessionId='.$SystemGeneratedId.'/VOovRdk-$sUkFFRd9'
    'DWRSESSIONID'=> "$SystemGeneratedId"
  );
 
-sleep 1;
+sleep 5;
 
 #	'scriptSessionId'=> "$systemGeneratedId\/VOovRdk-\$sUkFFRd9"	
 
