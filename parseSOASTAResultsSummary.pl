@@ -324,7 +324,7 @@ scriptSessionId='.$SystemGeneratedId.'/VOovRdk-$sUkFFRd9'
    'DWRSESSIONID'=> "$SystemGeneratedId"
  );
 
-sleep 120;
+sleep 1;
 
 #	'scriptSessionId'=> "$systemGeneratedId\/VOovRdk-\$sUkFFRd9"	
 
