@@ -252,7 +252,7 @@ my $url = "$soastaUrl".'/dwr/call/plaincall/__System.generateId.dwr';
  
  $myData=$response1->content;
  
-#print "Response 1 is $myData \n";
+print "Response 1 is $myData \n";
 $myData=~/.handleCallback\(\"\d\",\"\d\",\"(.*?)\"\)/;
 
 $SystemGeneratedId=$1;
