@@ -198,7 +198,7 @@ $browser->cookie_jar({});  #Enable Cookies
 
 #uncomment the below to record calls in CloudTest
 # $browser->proxy(['http', 'ftp'], 'http://localhost:8080/');
- $browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
+ #$browser->proxy(['http', 'ftp'], 'http://target.soasta.com/concerto');
 
 my $url="$soastaUrl".'/';
  my @ns_headers = (
@@ -219,6 +219,7 @@ my $url="$soastaUrl".'/';
 
  $myDataBuild=$response1->content;
  $myDataBuild =~ /\<meta name=\"buildnumber\" content=\"(.*?)\"/;
+ #<meta name="buildnumber" content="
  $buildNumber = $1;
  print ("Build numer is $buildNumber\n");
 
