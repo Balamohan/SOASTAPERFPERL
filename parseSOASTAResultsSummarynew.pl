@@ -217,8 +217,8 @@ my $url="$soastaUrl".'/';
  );
 
  $myDataBuild=$response1->content;
- #$myDataBuild =~ /\<meta name=\"buildnumber\" content=\"(.*?)\"/;
- $myDataBuild =~ /\<meta name=\"buildnumber\" content=\"
+ $myDataBuild =~ /\<meta name=\"buildnumber\" content=\"(.*?)\"/;
+ #$myDataBuild =~ /\<meta name=\"buildnumber\" content=\"
  $buildNumber = $1;
  #print("myDataBuild is $myDataBuild");
  #print("response1 is $response1");
