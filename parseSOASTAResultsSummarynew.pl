@@ -188,9 +188,9 @@ print ("\tWrite details to file 2_SOASTA_RESULTS_DETAILS.xml\n");
 
 use LWP::UserAgent;
 use HTTP::Request;
-#$soastaUrl="http://ttlabca.soasta.com";
-#$username="mostenbergci";
-#$password="soasta";
+$soastaUrl="http://t1.soasta.com";
+$username="balamohan.prabhakaran@target.com";
+$password="target";
 #$resultId="16109";
 
 my $browser = LWP::UserAgent->new;
