@@ -188,7 +188,7 @@ print ("\tWrite details to file 2_SOASTA_RESULTS_DETAILS.xml\n");
 
 use LWP::UserAgent;
 use HTTP::Request;
-$soastaUrl="http://t1.soasta.com";
+$soastaUrl="http://t1.soasta.com/concerto";
 $username="balamohan.prabhakaran@target.com";
 $password="target";
 #$resultId="16109";
@@ -217,7 +217,8 @@ my $url="$soastaUrl".'/';
  );
 
  $myDataBuild=$response1->content;
- $myDataBuild =~ /\<meta name=\"buildnumber\" content=\"(.*?)\"/;
+ #$myDataBuild =~ /\<meta name=\"buildnumber\" content=\"(.*?)\"/;
+ $myDataBuild =~ /\<meta name=\"buildnumber\" content=\"
  $buildNumber = $1;
  #print("myDataBuild is $myDataBuild");
  #print("response1 is $response1");
